@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Ussd worker test</title>
+  <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+  <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+  <header class="navbar">
+    <p class="navbar-brand">USSD worker test</p>
+  </header>
+
+  <main class="column col-8 col-md-12" id="app">
+
+    <div class="form-group">
+      <label class="form-label" for="ussd" >USSD</label>
+      <input class="form-input" id="ussd" type="text"
+        placeholder="*122# - 1 - 1"
+        v-model="newUssdRequest"
+        @keyup.enter="addUssdRequest">
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>USSD</th>
+          <th>Choices</th>
+          <th>Result</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="ussdRequest in ussdRequests">
+          <td>{{ussdRequest.id}}</td>
+          <td>{{ussdRequest.code}}</td>
+          <td>{{ussdRequest.choices}}</td>
+          <td>{{ussdRequest.result || 'waiting...'}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script type="module" src="main.mjs"></script>
+</body>
+
+</html>

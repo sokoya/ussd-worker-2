@@ -1,0 +1,20 @@
+header {
+  background: #5755d9;
+  color: #fff;
+  margin-bottom: 24px;
+}
+
+.navbar-brand {
+  margin: 24px;
+}
+
+main {
+  min-width: auto;
+  padding: 0 1.5rem;
+  margin: auto;
+  width: 100%;
+}
+
+table {
+  margin-top: 48px;
+}
