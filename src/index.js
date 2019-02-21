@@ -13,16 +13,28 @@ const getLastId = () => db.length ? db[db.length-1].id : 0
 const [PENDING, DONE] = [0, 1]
 
 app.get('/ussd-requests', (req, res) => {
-  const status = req.query.status
-  const data = status ? db.filter(doc => doc.status.toString() === status) : db
+  const { status, type } = req.query
+
+  const data = (() => {
+    if(type && status) {
+      return db
+        .filter(doc => doc.status.toString() === status)
+        .filter(doc => doc.type === type)
+    }
+
+    if(type) { return db.filter(doc => doc.type === type) }
+    if(status) { return db.filter(doc => doc.status.toString() === status) }
+
+    return db
+  })()
 
   res.send(data)
 })
 
 app.post('/ussd-requests', (req, res) => {
-  const { code, choices } = req.body
+  const { code, choices, type } = req.body
 
-  const newUssdRequest = { id: getLastId()+1, code, choices, status: PENDING }
+  const newUssdRequest = { id: getLastId()+1, code, choices, type, status: PENDING }
   db.push(newUssdRequest)
 
   res.send({ ...newUssdRequest })

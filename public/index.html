@@ -18,17 +18,28 @@
   <main class="column col-8 col-md-12" id="app">
 
     <div class="form-group">
-      <label class="form-label" for="ussd" >USSD</label>
+      <label class="form-label" for="ussd">USSD</label>
       <input class="form-input" id="ussd" type="text"
         placeholder="*122# - 1 - 1"
-        v-model="newUssdRequest"
+        v-model.trim="newUssdRequest"
         @keyup.enter="addUssdRequest">
     </div>
+
+    <div class="form-group">
+      <label class="form-label" for="type">Type</label>
+      <input class="form-input" id="type" type="text"
+        placeholder="hormuud"
+        v-model.trim="newUssdRequestType"
+        @keyup.enter="addUssdRequest">
+    </div>
+
+    <button class="btn add-btn" @click="addUssdRequest">add</button>
 
     <table class="table">
       <thead>
         <tr>
           <th>#</th>
+          <th>Type</th>
           <th>USSD</th>
           <th>Choices</th>
           <th>Result</th>
@@ -37,6 +48,7 @@
       <tbody>
         <tr v-for="ussdRequest in ussdRequests">
           <td>{{ussdRequest.id}}</td>
+          <td>{{ussdRequest.type}}</td>
           <td>{{ussdRequest.code}}</td>
           <td>{{ussdRequest.choices}}</td>
           <td>{{ussdRequest.result || 'waiting...'}}</td>

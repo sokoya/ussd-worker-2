@@ -4,15 +4,16 @@ const app = new Vue({
   el: '#app',
   data: {
     newUssdRequest: '',
+    newUssdRequestType: '',
     ussdRequests: []
   },
   methods: {
     addUssdRequest: async function() {
-      const value = this.newUssdRequest && this.newUssdRequest.trim()
-      if(!value) { return }
+      if(!this.newUssdRequest || !this.newUssdRequestType) { return }
 
-      const [code, ...choices] = value.split('-').map(s => s.trim())
-      const ussdRequest = await http.post('/ussd-requests', { code, choices })
+      const [code, ...choices] = this.newUssdRequest.split('-').map(s => s.trim())
+      const type = this.newUssdRequestType
+      const ussdRequest = await http.post('/ussd-requests', { code, choices, type })
 
       this.ussdRequests.push(ussdRequest)
       this.newUssdRequest = ''
