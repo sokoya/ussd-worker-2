@@ -46,7 +46,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="ussdRequest in ussdRequests">
+        <tr v-for="ussdRequest in ussdRequests.slice().reverse()">
           <td>{{ussdRequest.id}}</td>
           <td>{{ussdRequest.type}}</td>
           <td>{{ussdRequest.code}}</td>
