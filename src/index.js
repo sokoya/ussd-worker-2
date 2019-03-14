@@ -1,4 +1,5 @@
 const express = require('express')
+require('express-async-errors');
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 
@@ -51,6 +52,12 @@ app.put('/ussd-requests/:id', (req, res) => {
     }
   }
 
+})
+
+app.use((err, req, res, next) => {
+  if (res.headersSent) { return next(err) }
+  res.status(500)
+  res.json({ message: err.message })
 })
 
 const port = 3000
