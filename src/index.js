@@ -16,7 +16,7 @@ app.use(morgan('tiny'))
  *   type: string,
  *   code: string,
  *   choices: string[],
- *   result: string | undefined,
+ *   result?: string,
  *   status: number
  *  }>}
  */
