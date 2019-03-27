@@ -1,3 +1,4 @@
+//@ts-check
 const express = require('express')
 require('express-async-errors');
 const bodyParser = require('body-parser')
@@ -9,7 +10,18 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('public'))
 app.use(morgan('tiny'))
 
+/**
+ * @type {Array<{
+ *   id: number,
+ *   type: string,
+ *   code: string,
+ *   choices: string[],
+ *   result: string | undefined,
+ *   status: number
+ *  }>}
+ */
 const db = []
+
 const getLastId = () => db.length ? db[db.length-1].id : 0
 const [PENDING, DONE] = [0, 1]
 
