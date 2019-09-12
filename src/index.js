@@ -1,4 +1,5 @@
 //@ts-check
+var ip = require("ip");
 const express = require('express')
 require('express-async-errors');
 const bodyParser = require('body-parser')
@@ -73,4 +74,10 @@ app.use((err, req, res, next) => {
 })
 
 const port = 3000
-app.listen(port, () => console.log(`app is listening on port ${port}`))
+app.listen(port, () => {
+  console.log(`Server started at port ${port}`)
+  console.log('Available on:')
+  console.log(` • http://localhost:${port}`)
+  console.log(` • http://${ip.address()}:${port}`)
+  console.log('\n')
+})
