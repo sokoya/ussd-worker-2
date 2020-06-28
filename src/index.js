@@ -49,7 +49,7 @@ if(id){
 
     return db
   })()
-  console.log( data)
+  
   res.send(data)
 
 })
