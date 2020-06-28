@@ -1,4 +1,4 @@
-const baseURL = 'https://myworker.herokuapp.com'
+const baseURL = 'https://ussd-worker.herokuapp.com'
 
 export const http = {
   get: (url) => {
