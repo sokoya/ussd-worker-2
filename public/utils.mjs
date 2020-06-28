@@ -1,4 +1,4 @@
-const baseURL = 'http://localhost:3000'
+const baseURL = 'https://myworker.herokuapp.com'
 
 export const http = {
   get: (url) => {
