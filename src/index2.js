@@ -1,11 +1,11 @@
+//@ts-check
 var ip = require("ip");
 const express = require('express')
 require('express-async-errors');
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
-const PORT= process.env.PORT || '8080' 
-const app = express();
-app.set("port", PORT);
+
+const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('public'))
@@ -27,16 +27,8 @@ const getLastId = () => db.length ? db[db.length-1].id : 0
 const [PENDING, DONE] = [0, 1]
 
 app.get('/ussd-requests', (req, res) => {
-  const { id, status, type } = req.query
-if(id){
-  var  result  = "Approved Manually";
- for(let i in db) {
-    if(db[i].id.toString() === id) {
-      db[i] = { ...db[i], result, status: DONE }
-      return res.send(db[i])
-    }
-  }
-}
+  const { status, type } = req.query
+
   const data = (() => {
     if(type && status) {
       return db
@@ -81,10 +73,11 @@ app.use((err, req, res, next) => {
   res.json({ message: err.message })
 })
 
-app.listen(PORT, () => {
-  console.log(`Server started at port ${PORT}`)
+const port = 3000
+app.listen(port, () => {
+  console.log(`Server started at port ${port}`)
   console.log('Available on:')
-  console.log(` • http://localhost:${PORT}`)
-  console.log(` • http://${ip.address()}:${PORT}`)
+  console.log(` • http://localhost:${port}`)
+  console.log(` • http://${ip.address()}:${port}`)
   console.log('\n')
 })
