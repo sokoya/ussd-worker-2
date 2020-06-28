@@ -55,7 +55,7 @@ if(id){
 
 app.post('/ussd-requests', (req, res) => {
   const {  code, choices, type } = req.body
-
+  console.log( req.body )
   const newUssdRequest = { id: getLastId()+1, code, choices, type, status: PENDING }
   db.push(newUssdRequest)
 
@@ -65,8 +65,7 @@ app.post('/ussd-requests', (req, res) => {
 app.put('/ussd-requests/:id', (req, res) => {
   const { result } = req.body
   const id = req.params.id
-  console.log( req )
-
+  
   for(let i in db) {
     if(db[i].id.toString() === id) {
       db[i] = { ...db[i], result, status: DONE }
