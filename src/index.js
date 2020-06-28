@@ -57,8 +57,8 @@ if(id){
 app.post('/ussd-requests', (req, res) => {
   const { id, code, choices, type } = req.body
 
-  // const newUssdRequest = { id: getLastId()+1, code, choices, type, status: PENDING }
-  const newUssdRequest = { id, code, choices, type, status: PENDING }
+  const newUssdRequest = { id: getLastId()+1, code, choices, type, status: PENDING }
+  // const newUssdRequest = { id, code, choices, type, status: PENDING }
   db.push(newUssdRequest)
 
   res.send({ ...newUssdRequest })
