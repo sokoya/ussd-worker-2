@@ -77,10 +77,10 @@ app.put('/ussd-requests/:id', (req, res) => {
       return res.send(db[i])
     }
   }
-
 })
 
 app.use((err, req, res, next) => {
+  console.log('charging...')
   if (res.headersSent) { return next(err) }
   res.status(500)
   res.json({ message: err.message })
