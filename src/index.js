@@ -26,6 +26,7 @@ const db = []
 const getLastId = () => db.length ? db[db.length-1].id : 0
 const [PENDING, DONE] = [0, 1]
 
+// filter to get the result...
 app.get('/ussd-requests', (req, res) => {
   const { id, status, type } = req.query
 if(id){
@@ -53,19 +54,22 @@ if(id){
   res.send(data)
 })
 
+// post ussd to the ussd worker app
 app.post('/ussd-requests', (req, res) => {
-  const {  code, choices, type } = req.body
-  console.log( req.body )
-  const newUssdRequest = { id: getLastId()+1, code, choices, type, status: PENDING }
+  const {  id, code, choices, type } = req.body
+  
+  const newUssdRequest = { id, code, choices, type, status: PENDING }
   db.push(newUssdRequest)
 
   res.send({ ...newUssdRequest })
 })
 
+
+// update the heroku app base on the result got from the ussd worker.
 app.put('/ussd-requests/:id', (req, res) => {
   const { result } = req.body
   const id = req.params.id
-  alert( id)
+  console.log( result )
   
   for(let i in db) {
     if(db[i].id.toString() === id) {
