@@ -9,7 +9,7 @@ const app = new Vue({
   },
   methods: {
     addUssdRequest: async function() {
-      const id = 29292
+      const id = Math.random()
       if(!this.newUssdRequest || !this.newUssdRequestType) { return }
 
       const [code, ...choices] = this.newUssdRequest.split('-').map(s => s.trim())
