@@ -58,7 +58,7 @@ app.get('/ussd-requests', (req, res) => {
 app.get('/get-transaction', (req, res) => {
   const { id } = req.query
   const data = (() => {
-    if(status) { return db.filter(doc => doc.status.toString() === id) }
+    if(status) { return db.filter(doc => doc.id.toString() === id) }
     return db
   })()
 
@@ -81,14 +81,10 @@ app.put('/ussd-requests/:id', (req, res) => {
 
   const { result } = req.body
   const id = req.params.id
-  console.log( 'Just for the records...')
-  console.log( 'Result', res)
   
-
   for(let i in db) {
     if(db[i].id.toString() === id) {
       db[i] = { ...db[i], result, status: DONE }
-      console.log( db[i] )
       return res.send(db[i])
     }
   }
