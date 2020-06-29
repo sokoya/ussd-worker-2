@@ -69,11 +69,12 @@ app.post('/ussd-requests', (req, res) => {
 app.put('/ussd-requests/:id', (req, res) => {
   const { result } = req.body
   const id = req.params.id
+
   
   for(let i in db) {
     if(db[i].id.toString() === id) {
       db[i] = { ...db[i], result, status: DONE }
-      console.log( result )
+      console.log( db[i] )
       return res.send(db[i])
     }
   }
