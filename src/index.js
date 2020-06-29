@@ -75,7 +75,7 @@ app.put('/ussd-requests/:id', (req, res) => {
     if(db[i].id.toString() === id) {
       db[i] = { ...db[i], result, status: DONE }
       console.log( db[i] )
-      return res.send(db[i])
+      // return res.send(db[i])
     }
   }
 })
