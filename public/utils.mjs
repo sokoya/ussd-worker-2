@@ -2,6 +2,7 @@ const baseURL = 'https://ussd-worker.herokuapp.com'
 
 export const http = {
   get: (url) => {
+    console.log(url)
     return fetch(baseURL + url).then(res => res.json())
   },
   post: (url, data = {}) => {
