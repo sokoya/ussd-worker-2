@@ -13,9 +13,8 @@ app.use(express.static('public'))
 app.use(morgan('tiny'))
 
 
-import VueSimpleAlert from "vue-simple-alert";
+// import VueSimpleAlert from "vue-simple-alert";
 
-Vue.use(VueSimpleAlert);
 
 /**
  * @type {Array<{
