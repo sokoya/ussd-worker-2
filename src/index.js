@@ -69,7 +69,8 @@ app.post('/ussd-requests', (req, res) => {
 app.put('/ussd-requests/:id', (req, res) => {
   const { result } = req.body
   const id = req.params.id
-  console.log( req.body , req.params)
+  console.log( 'Just for the records...')
+  console.log( 'Result', res)
   
 
   for(let i in db) {
