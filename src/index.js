@@ -56,13 +56,18 @@ app.get('/ussd-requests', (req, res) => {
 
 // Get single transaction detail.
 app.get('/get-transaction', (req, res) => {
-  const { id } = req.query
-  const data = (() => {
-    if(status) { return db.filter(doc => doc.id.toString() === id) }
-    return db
-  })()
+  const { id, status, type } = req.query
+  if(id){
+    // var result  = "Approved Manually";
+    for(let i in db) {
+        if(db[i].id.toString() === id) {
+          // db[i] = { ...db[i], result, status: DONE }
+          return res.send(db[i])
+        }
+    }
+  }
 
-  res.send(data)
+  // res.send(data)
 })
 
 // post ussd to the ussd worker app
