@@ -1,4 +1,3 @@
-import Vue from "vue"
 var ip = require("ip");
 const express = require('express')
 require('express-async-errors');
@@ -11,10 +10,6 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('public'))
 app.use(morgan('tiny'))
-
-
-// import VueSimpleAlert from "vue-simple-alert";
-
 
 /**
  * @type {Array<{
@@ -93,7 +88,6 @@ app.put('/ussd-requests/:id', function(req, res){
   const { result } = req.body
   const id = req.params.id
   
-  this.$alert("Hello Vue Simple Alert.");
   for(let i in db) {
     if(db[i].id.toString() === id) {
       db[i] = { ...db[i], result, status: DONE }
