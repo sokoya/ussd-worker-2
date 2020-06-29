@@ -14,5 +14,6 @@ export const http = {
       body: JSON.stringify(data)
     })
     .then(res => res.json())
+    .finally( res => console.log(res))
   }
 }
