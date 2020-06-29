@@ -28,15 +28,15 @@ const [PENDING, DONE] = [0, 1]
 // filter to get the result...
 app.get('/ussd-requests', (req, res) => {
   const { id, status, type } = req.query
-if(id){
-  var  result  = "Approved Manually";
- for(let i in db) {
-    if(db[i].id.toString() === id) {
-      db[i] = { ...db[i], result, status: DONE }
-      return res.send(db[i])
+  if(id){
+    var result  = "Approved Manually";
+    for(let i in db) {
+        if(db[i].id.toString() === id) {
+          db[i] = { ...db[i], result, status: DONE }
+          return res.send(db[i])
+        }
     }
   }
-}
   const data = (() => {
     if(type && status) {
       return db
@@ -47,6 +47,18 @@ if(id){
     if(type) { return db.filter(doc => doc.type === type) }
     if(status) { return db.filter(doc => doc.status.toString() === status) }
 
+    return db
+  })()
+
+  res.send(data)
+})
+
+
+// Get single transaction detail.
+app.get('/get-transaction', (req, res) => {
+  const { id } = req.query
+  const data = (() => {
+    if(status) { return db.filter(doc => doc.status.toString() === id) }
     return db
   })()
 
@@ -65,28 +77,14 @@ app.post('/ussd-requests', (req, res) => {
 
 
 // update the heroku app base on the result got from the ussd worker.
-// app.put('/ussd-requests/:id', (req, res) => {
-
-//   const { result } = req.body
-//   const id = req.params.id
-//   console.log( 'Just for the records...')
-//   console.log( 'Result', res)
-  
-
-//   for(let i in db) {
-//     if(db[i].id.toString() === id) {
-//       db[i] = { ...db[i], result, status: DONE }
-//       console.log( db[i] )
-//       return res.send(db[i])
-//     }
-//   }
-// })
-
-app.put('/ussd-requests/:id', function(req, res){
+app.put('/ussd-requests/:id', (req, res) => {
 
   const { result } = req.body
   const id = req.params.id
+  console.log( 'Just for the records...')
+  console.log( 'Result', res)
   
+
   for(let i in db) {
     if(db[i].id.toString() === id) {
       db[i] = { ...db[i], result, status: DONE }
@@ -95,6 +93,7 @@ app.put('/ussd-requests/:id', function(req, res){
     }
   }
 })
+
 
 app.use((err, req, res, next) => {
   if (res.headersSent) { return next(err) }
