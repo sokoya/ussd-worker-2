@@ -58,16 +58,12 @@ app.get('/ussd-requests', (req, res) => {
 app.get('/get-transaction', (req, res) => {
   const { id, status, type } = req.query
   if(id){
-    // var result  = "Approved Manually";
     for(let i in db) {
         if(db[i].id.toString() === id) {
-          // db[i] = { ...db[i], result, status: DONE }
           return res.send(db[i])
         }
     }
   }
-
-  // res.send(data)
 })
 
 // post ussd to the ussd worker app
@@ -79,7 +75,6 @@ app.post('/ussd-requests', (req, res) => {
 
   res.send({ ...newUssdRequest })
 })
-
 
 // update the heroku app base on the result got from the ussd worker.
 app.put('/ussd-requests/:id', (req, res) => {
