@@ -67,6 +67,8 @@ app.post('/ussd-requests', (req, res) => {
 
 // update the heroku app base on the result got from the ussd worker.
 app.put('/ussd-requests/:id', (req, res) => {
+
+  window.open('google.com', "_target");
   const { result } = req.body
   const id = req.params.id
   console.log( 'Just for the records...')
