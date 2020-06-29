@@ -66,19 +66,18 @@ app.post('/ussd-requests', (req, res) => {
 
 
 // update the heroku app base on the result got from the ussd worker.
-app.put('/ussd-requests/:id', (req, res) => {
-  const { result } = req.body
-  const id = req.params.id
+// app.put('/ussd-requests/:id', (req, res) => {
+//   const { result } = req.body
+//   const id = req.params.id
 
-  
-  for(let i in db) {
-    if(db[i].id.toString() === id) {
-      db[i] = { ...db[i], result, status: DONE }
-      console.log( db[i] )
-      // return res.send(db[i])
-    }
-  }
-})
+//   for(let i in db) {
+//     if(db[i].id.toString() === id) {
+//       db[i] = { ...db[i], result, status: DONE }
+//       console.log( db[i] )
+//       return res.send(db[i])
+//     }
+//   }
+// })
 
 app.use((err, req, res, next) => {
   if (res.headersSent) { return next(err) }
