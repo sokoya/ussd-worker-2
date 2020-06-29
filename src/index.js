@@ -69,7 +69,7 @@ app.post('/ussd-requests', (req, res) => {
 app.put('/ussd-requests/:id', (req, res) => {
   const { result } = req.body
   const id = req.params.id
-  
+  console.log('database', db)
   for(let i in db) {
     if(db[i].id.toString() === id) {
       db[i] = { ...db[i], result, status: DONE }
@@ -80,7 +80,6 @@ app.put('/ussd-requests/:id', (req, res) => {
 })
 
 app.use((err, req, res, next) => {
-  console.log('charging...')
   if (res.headersSent) { return next(err) }
   res.status(500)
   res.json({ message: err.message })
