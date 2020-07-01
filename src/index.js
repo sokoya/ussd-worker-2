@@ -95,7 +95,6 @@ app.put('/ussd-requests/:id', (req, res) => {
         hostname: 'www.payscribe.ng',
         path: '/webhook/airtime_response',
         method: 'POST',
-        port : '443',
         headers: {
             'Content-Type': 'application/json',
             'Content-Length': Buffer.byteLength(postData)
