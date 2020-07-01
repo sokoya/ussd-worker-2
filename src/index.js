@@ -81,6 +81,8 @@ app.put('/ussd-requests/:id', (req, res) => {
 
   const { result } = req.body
   const id = req.params.id
+
+  console.log('req : ', req, ' res:' , res )
   
   for(let i in db) {
     if(db[i].id.toString() === id) {
@@ -92,11 +94,10 @@ app.put('/ussd-requests/:id', (req, res) => {
 
 
 app.use((err, req, res, next) => {
-  console.log('err: ', err, 'req : ', req, ' res:' , res )
+  
   if (res.headersSent) { 
     return next(err) 
   }
-
   res.status(500)
   res.json({ message: err.message })
 })
