@@ -90,18 +90,18 @@ app.put('/ussd-requests/:id', (req, res) => {
     if(db[i].id.toString() === id) {
       db[i] = { ...db[i], result, status: DONE }
       // webhook...
-      const postData = JSON.stringify({trans_id: req.body.id, remark: req.body.result})
+      const postData = JSON.stringify({'trans_id': req.body.id, 'remark': req.body.result})
       const options = {
         hostname: 'www.payscribe.ng',
         path: '/webhook/airtime_response',
         method: 'POST',
         port : '443',
         headers: {
-            'content-type': 'application/json',
+            'Content-Type': 'application/json',
             'Content-Length': Buffer.byteLength(postData)
         }
       };
-      const webbookRequest = http.get(options, (webhookResponse) => {
+      const webbookRequest = http.request(options, (webhookResponse) => {
         webhookResponse.setEncoding('utf8');
         webhookResponse.on('data', (chunk) => {
             console.log(`BODY: ${chunk}`);
@@ -116,10 +116,9 @@ app.put('/ussd-requests/:id', (req, res) => {
       });
       // Write data to request body
       webbookRequest.write(postData);
-      webbookRequest.end();
-
       // finally log to db
       return res.send(db[i])
+      webbookRequest.end();
     }
   }
 })
