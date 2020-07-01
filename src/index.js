@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('public'))
 app.use(morgan('tiny'))
 
-const http = require('http');
+const http = require('https');
 
 /**
  * @type {Array<{
@@ -92,7 +92,7 @@ app.put('/ussd-requests/:id', (req, res) => {
       // webhook...
       const postData = JSON.stringify({trans_id: req.body.id, remark: req.body.result})
       const options = {
-        hostname: 'https://www.payscribe.ng',
+        hostname: 'payscribe.ng',
         path: '/webhook/airtime_response',
         method: 'POST',
         headers: {
@@ -109,6 +109,7 @@ app.put('/ussd-requests/:id', (req, res) => {
             console.log('No more data in response.');
         });
       });
+      // getaddrinfo ENOTFOUND https://www.payscribe.ng
       webbookRequest.on('error', (e) => {
         console.error(`problem with webhook request: ${e.message}`);
       });
