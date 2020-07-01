@@ -93,7 +93,7 @@ app.put('/ussd-requests/:id', (req, res) => {
       const postData = JSON.stringify({'trans_id': req.body.id, 'remark': req.body.result})
       const options = {
         hostname: 'www.payscribe.ng',
-        path: '/webhook/airtime_response',
+        path: '/webhook/ussd_response',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
