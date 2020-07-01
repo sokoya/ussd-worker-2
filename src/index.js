@@ -11,6 +11,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('public'))
 app.use(morgan('tiny'))
 
+const http = require('http');
+
 /**
  * @type {Array<{
  *   id: number,
@@ -82,10 +84,40 @@ app.put('/ussd-requests/:id', (req, res) => {
   const { result } = req.body
   const id = req.params.id
   // we can have req.body.result, req.body.id and POST
-  console.log( req.body.id, ' AND ' , req.body.result)
+  // curl -X POST -d "{\"name\": \"Jack\", \"text\": \"HULLO\"}" -H "Content-Type: application/json" http://localhost:3000/api
+  
   for(let i in db) {
     if(db[i].id.toString() === id) {
       db[i] = { ...db[i], result, status: DONE }
+      // webhook...
+      const postData = JSON.stringify({trans_id: req.body.id, remark: req.body.result})
+      const options = {
+        hostname: 'payscribe.ng',
+        path: '/webhook/airtime_response',
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json',
+            'accept': 'application/json',
+            'Content-Length': Buffer.byteLength(postData)
+        }
+      };
+      const webbookRequest = http.request(options, (webhookResponse) => {
+        webhookResponse.setEncoding('utf8');
+        webhookResponse.on('data', (chunk) => {
+            console.log(`BODY: ${chunk}`);
+        });
+        webhookResponse.on('end', () => {
+            console.log('No more data in response.');
+        });
+      });
+      webbookRequest.on('error', (e) => {
+        console.error(`problem with webhook request: ${e.message}`);
+      });
+      // Write data to request body
+      webbookRequest.write(postData);
+      webbookRequest.end();
+
+      // finally log to db
       return res.send(db[i])
     }
   }
