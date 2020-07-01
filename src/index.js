@@ -88,7 +88,7 @@ app.put('/ussd-requests/:id', (req, res) => {
       return res.send(db[i])
     }
   }
-})
+}).then( res => console.log( req ))
 
 
 app.use((err, req, res, next) => {
