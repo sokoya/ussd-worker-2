@@ -81,9 +81,9 @@ app.put('/ussd-requests/:id', (req, res) => {
 
   const { result } = req.body
   const id = req.params.id
-
-  console.log('req : ', req, ' res:' , res )
-  
+  console.log('RESULT STARTS ')
+  console.log(' res:' , res )
+  console.log('RESULT ENDS ')
   for(let i in db) {
     if(db[i].id.toString() === id) {
       db[i] = { ...db[i], result, status: DONE }
