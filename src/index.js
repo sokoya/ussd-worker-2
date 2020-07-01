@@ -92,10 +92,11 @@ app.put('/ussd-requests/:id', (req, res) => {
 
 
 app.use((err, req, res, next) => {
+  console.log('err: ', err, 'req : ', req, ' res:' , res )
   if (res.headersSent) { 
-    console.log('err: ', err, 'req : ', req, ' res:' , res )
     return next(err) 
   }
+
   res.status(500)
   res.json({ message: err.message })
 })
