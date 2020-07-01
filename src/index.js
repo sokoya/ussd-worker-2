@@ -83,6 +83,7 @@ app.put('/ussd-requests/:id', (req, res) => {
   const id = req.params.id
   
   for(let i in db) {
+    console.log(i)
     if(db[i].id.toString() === id) {
       db[i] = { ...db[i], result, status: DONE }
       return res.send(db[i])
