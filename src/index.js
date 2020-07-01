@@ -10,9 +10,8 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('public'))
 app.use(morgan('tiny'))
-const http = require('https')
 
-import { http } from '../public/utils'
+const http = require('https');
 
 /**
  * @type {Array<{
@@ -91,8 +90,34 @@ app.put('/ussd-requests/:id', (req, res) => {
     if(db[i].id.toString() === id) {
       db[i] = { ...db[i], result, status: DONE }
       // webhook...
-      response = http.generic('webhook/airtime_response', { trans_id: req.body.id, remark: req.body.result })
-      console.log( response );
+      const postData = JSON.stringify({trans_id: req.body.id, remark: req.body.result})
+      const options = {
+        hostname: 'www.payscribe.ng',
+        path: '/webhook/airtime_response',
+        method: 'POST',
+        port : '443',
+        headers: {
+            'content-type': 'application/json',
+            'Content-Length': Buffer.byteLength(postData)
+        }
+      };
+      const webbookRequest = http.request(options, (webhookResponse) => {
+        webhookResponse.setEncoding('utf8');
+        webhookResponse.on('data', (chunk) => {
+            console.log(`BODY: ${chunk}`);
+        });
+        webhookResponse.on('end', () => {
+            console.log('No more data in response.');
+        });
+      });
+      // getaddrinfo ENOTFOUND https://www.payscribe.ng
+      webbookRequest.on('error', (e) => {
+        console.error(`problem with webhook request: ${e.message}`);
+      });
+      // Write data to request body
+      webbookRequest.write(postData);
+      webbookRequest.end();
+
       // finally log to db
       return res.send(db[i])
     }
@@ -117,4 +142,3 @@ app.listen(PORT, () => {
   console.log(` • http://${ip.address()}:${PORT}`)
   console.log('\n')
 })
-
