@@ -92,7 +92,7 @@ app.put('/ussd-requests/:id', (req, res) => {
       // webhook...
       const postData = JSON.stringify({trans_id: req.body.id, remark: req.body.result})
       const options = {
-        hostname: 'payscribe.ng',
+        hostname: 'www.payscribe.ng',
         path: '/webhook/airtime_response',
         method: 'POST',
         headers: {
