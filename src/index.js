@@ -101,7 +101,7 @@ app.put('/ussd-requests/:id', (req, res) => {
             'Content-Length': Buffer.byteLength(postData)
         }
       };
-      const webbookRequest = http.request(options, (webhookResponse) => {
+      const webbookRequest = http.get(options, (webhookResponse) => {
         webhookResponse.setEncoding('utf8');
         webhookResponse.on('data', (chunk) => {
             console.log(`BODY: ${chunk}`);
