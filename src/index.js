@@ -12,7 +12,7 @@ app.use(express.static('public'))
 app.use(morgan('tiny'))
 const http = require('https')
 
-import { http } from './utils.mjs'
+import { http } from '../public/utils'
 
 /**
  * @type {Array<{
