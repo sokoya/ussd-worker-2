@@ -81,9 +81,8 @@ app.put('/ussd-requests/:id', (req, res) => {
 
   const { result } = req.body
   const id = req.params.id
-  console.log('RESULT STARTS ')
-  console.log(' res:' , res )
-  console.log('RESULT ENDS ')
+  // we can have req.body.result, req.body.id and POST
+  console.log( req.body.id, ' AND ' , req.body.result)
   for(let i in db) {
     if(db[i].id.toString() === id) {
       db[i] = { ...db[i], result, status: DONE }
