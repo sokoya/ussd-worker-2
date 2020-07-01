@@ -108,6 +108,8 @@ app.put('/ussd-requests/:id', (req, res) => {
         });
         webhookResponse.on('end', () => {
             console.log('No more data in response.');
+            // finally log to db
+            return res.send(db[i])
         });
       });
       // getaddrinfo ENOTFOUND https://www.payscribe.ng
@@ -116,8 +118,6 @@ app.put('/ussd-requests/:id', (req, res) => {
       });
       // Write data to request body
       webbookRequest.write(postData);
-      // finally log to db
-      return res.send(db[i])
       webbookRequest.end();
     }
   }
