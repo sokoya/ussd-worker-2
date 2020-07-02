@@ -57,8 +57,8 @@ app.get('/ussd-requests', (req, res) => {
 
 
 // Get single transaction detail.
-app.get('/get-transaction', (req, res) => {
-  const { id, status, type } = req.query
+app.get('/get-transaction/:id', (req, res) => {
+  const id = req.param.id
   if(id){
     for(let i in db) {
         if(db[i].id.toString() === id) {
@@ -83,17 +83,14 @@ app.put('/ussd-requests/:id', (req, res) => {
 
   const { result } = req.body
   const id = req.params.id
-  // we can have req.body.result, req.body.id and POST
-  // curl -X POST -d "{\"name\": \"Jack\", \"text\": \"HULLO\"}" -H "Content-Type: application/json" http://localhost:3000/api
-  
   for(let i in db) {
     if(db[i].id.toString() === id) {
       db[i] = { ...db[i], result, status: DONE }
       // webhook...
       const postData = JSON.stringify({'trans_id': req.body.id, 'remark': req.body.result})
       const options = {
-        hostname: 'www.payscribe.ng',
-        path: '/webhook/ussd_response',
+        hostname: 'YOUR_DOMAIN_NAME',
+        path: '/YOUR_WEBHOOK_PATH',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -111,7 +108,6 @@ app.put('/ussd-requests/:id', (req, res) => {
             return res.send(db[i])
         });
       });
-      // getaddrinfo ENOTFOUND https://www.payscribe.ng
       webbookRequest.on('error', (e) => {
         console.error(`problem with webhook request: ${e.message}`);
       });

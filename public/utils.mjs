@@ -1,5 +1,4 @@
 const baseURL = 'https://ussd-worker.herokuapp.com'
-const genericURL = 'https://www.payscribe.ng'
 
 export const http = {
   get: (url) => {
@@ -14,15 +13,5 @@ export const http = {
       body: JSON.stringify(data)
     })
     .then(res => res.json())
-  },
-  generic: (url, data = {}) => {
-    return fetch(genericURL + url, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
-    .then(res => res.json())
-  },
+  }
 }
