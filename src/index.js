@@ -57,8 +57,8 @@ app.get('/ussd-requests', (req, res) => {
 
 
 // Get single transaction detail.
-app.get('/get-transaction/:id', (req, res) => {
-  const id = req.param.id
+app.get('/get-transaction/', (req, res) => {
+  const { id } = req.query
   if(id){
     for(let i in db) {
         if(db[i].id.toString() === id) {
