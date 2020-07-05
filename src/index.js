@@ -39,6 +39,7 @@ app.get('/ussd-requests', (req, res) => {
         }
     }
   }
+  
   const data = (() => {
     if(type && status) {
       return db
