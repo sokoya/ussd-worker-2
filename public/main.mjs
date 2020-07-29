@@ -15,9 +15,7 @@ const app = new Vue({
 
       // where code is *123# and choices can be *1, *4 ... with  -
       // const [code, ...choices] = this.newUssdRequest.split('-').map(s => s.trim())
-      const [code, ...choices] = this.newUssdRequest.split('-').map(s => {
-        return parseInt(s.trim())
-      })
+      const [code, ...choices] = this.newUssdRequest.split('-').map(s => s.trim().toString())
       const type = this.newUssdRequestType
       const ussdRequest = await http.post('/ussd-requests', { id, code, choices, type })
 
