@@ -1,7 +1,7 @@
 {
-  "name": "ussd-worker-test",
+  "name": "ussd-worker-2",
   "version": "1.0.0",
-  "description": "api for testing ussd-worker app",
+  "description": "Rest API for data vending",
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -15,6 +15,6 @@
     "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "tabsamo company",
+  "author": "zerones technology",
   "license": "ISC"
 }

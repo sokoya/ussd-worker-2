@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('public'))
 app.use(morgan('tiny'))
 
-const http = require('https');
+const https = require('https');
 
 /**
  * @type {Array<{
@@ -69,13 +69,11 @@ app.get('/get-transaction/', (req, res) => {
 })
 
 
-// post ussd to the ussd worker app
+// post - Add a new Item from your API
 app.post('/ussd-requests', (req, res) => {
   const {  id, code, choices, type } = req.body
-  
   const newUssdRequest = { id, code, choices, type, status: PENDING }
   db.push(newUssdRequest)
-
   res.send({ ...newUssdRequest })
 })
 
@@ -99,7 +97,8 @@ app.put('/ussd-requests/:id', (req, res) => {
             'Content-Length': Buffer.byteLength(postData)
         }
       };
-      const webbookRequest = http.request(options, (webhookResponse) => {
+      // Using node Js request, version 2 should use postman-request package.
+      const webbookRequest = https.request(options, (webhookResponse) => {
         webhookResponse.setEncoding('utf8');
         webhookResponse.on('data', (chunk) => {
             console.log(`BODY: ${chunk}`);

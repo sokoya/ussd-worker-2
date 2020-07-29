@@ -3,15 +3,17 @@ import { http } from './utils.mjs'
 const app = new Vue({
   el: '#app',
   data: {
-    newUssdRequest: '',
-    newUssdRequestType: '',
+    newUssdRequest: '', // The Choices (USSD)
+    newUssdRequestType: '', // type either SIM 1 or 2 ( 1 or 2)
     ussdRequests: []
   },
   methods: {
     addUssdRequest: async function() {
       const id = Math.random()
+      // check if the type and message body is not empty
       if(!this.newUssdRequest || !this.newUssdRequestType) { return }
 
+      // where code is *123# and choices can be *1, *4 ... with  -
       const [code, ...choices] = this.newUssdRequest.split('-').map(s => s.trim())
       const type = this.newUssdRequestType
       const ussdRequest = await http.post('/ussd-requests', { id, code, choices, type })
