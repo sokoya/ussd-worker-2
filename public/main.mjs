@@ -8,6 +8,7 @@ const app = new Vue({
     ussdRequests: []
   },
   methods: {
+    
     addUssdRequest: async function() {
       const id = Math.random()
       // check if the type and message body is not empty
