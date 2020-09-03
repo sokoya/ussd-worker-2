@@ -20,6 +20,7 @@ const app = new Vue({
       const type = this.newUssdRequestType
       const ussdRequest = await http.post('/ussd-requests', { id, code, choices, type })
 
+      
       this.ussdRequests.push(ussdRequest)
       this.newUssdRequest = ''
     }
