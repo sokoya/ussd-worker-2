@@ -9,12 +9,11 @@ const app = new Vue({
   },
   methods: {
     
-    
+
     addUssdRequest: async function() {
       const id = Math.random()
       // check if the type and message body is not empty
       if(!this.newUssdRequest || !this.newUssdRequestType) { return }
-
       // where code is *123# and choices can be *1, *4 ... with  -
       // const [code, ...choices] = this.newUssdRequest.split('-').map(s => s.trim())
       const [code, ...choices] = this.newUssdRequest.split('-').map(s => s.trim().toString())
