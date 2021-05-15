@@ -88,21 +88,28 @@ app.put('/ussd-requests/:id', (req, res) => {
       db[i] = { ...db[i], result, status: DONE }
       // webhook...
       const postData = JSON.stringify({'trans_id': req.body.id, 'remark': req.body.result})
+      let trans_id = req.body.id;
       const options = {
-        hostname: 'www.payscribe.ng',
+        hostname: trans_id.substring(0, 2) === 'PS' ? 'www.payscribe.ng' : 'www.gecharl.com',
         path: '/webhook/ussd_response',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Content-Length': Buffer.byteLength(postData)
         }
+
       };
+//$@wTP^Rg
+
+
       // Using node Js request, version 2 should use postman-request package.
       const webbookRequest = https.request(options, (webhookResponse) => {
         webhookResponse.setEncoding('utf8');
         webhookResponse.on('data', (chunk) => {
             console.log(`BODY: ${chunk}`);
         });
+
+        // X!rps5AgK#J6
         webhookResponse.on('end', () => {
             console.log('No more data in response.');
             // finally log to db
